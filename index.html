@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лаура та Сонет: Світ Франческо Петрарки</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+
+        :root {
+            --color-background: #EFEBE0;
+            --color-text: #3E4A59;
+            --color-accent: #B22222;
+            --color-highlight: #D4AF37;
+            --font-serif: 'Lora', 'Times New Roman', serif;
+            --font-sans: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="%23E4E0D6" fill-opacity="0.5"><circle cx="25" cy="25" r="5"/><circle cx="75" cy="75" r="5"/><rect x="45" y="45" width="10" height="10"/></g></svg>');
+            background-repeat: repeat;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .content-section {
+            padding: 60px 0;
+            min-height: 50vh; 
+            display: none; 
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            box-sizing: border-box;
+        }
+        
+        .content-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        header {
+            background-color: var(--color-text);
+            color: var(--color-background);
+            padding: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            position: sticky;
+            top: 0;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--color-highlight);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        nav a {
+            color: var(--color-background);
+            text-decoration: none;
+            margin-left: 25px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease-out;
+        }
+
+        nav a:hover::after,
+        nav a.active-link::after {
+            width: 100%;
+        }
+
+        nav a:hover,
+        nav a.active-link {
+            color: var(--color-accent);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 0 0 40px;
+            color: var(--color-text);
+            position: relative;
+        }
+        
+        .hero-image {
+            width: 280px;
+            height: 380px;
+            margin: 0 auto 20px;
+            border: 5px solid var(--color-highlight); 
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            background-size: cover;
+            background-position: top center; 
+            background-image: url('https://biographe.ru/wp-content/uploads/2021/02/43232.jpg'); 
+        }
+        
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: 4em;
+            margin-bottom: 5px;
+            color: var(--color-text);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-family: var(--font-serif);
+            font-size: 1.6em;
+            font-style: italic;
+            color: var(--color-accent);
+            padding-bottom: 10px;
+        }
+        
+
+        .quote-block {
+            background-color: var(--color-text);
+            color: var(--color-background);
+            padding: 50px 0;
+            margin: 40px 0;
+            font-style: italic;
+            font-family: var(--font-serif);
+            font-size: 1.6em;
+            text-align: center;
+            border: 3px double var(--color-highlight);
+        }
+
+
+        .section-title {
+            font-family: var(--font-serif);
+            text-align: center;
+            font-size: 2.5em;
+            color: var(--color-text);
+            margin-bottom: 40px;
+        }
+        
+        .grid-2 { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .card {
+            border: 1px solid var(--color-highlight);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 7px 7px 0px rgba(178, 34, 34, 0.1);
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 10px 10px 0px var(--color-accent);
+        }
+
+        .card h3 {
+            font-family: var(--font-serif);
+            color: var(--color-accent);
+            font-size: 1.4em;
+        }
+        
+        .card a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            margin-top: 15px; 
+            display: block;
+        }
+
+        .card a:hover {
+            color: var(--color-text);
+        }
+
+      
+        .analysis-block {
+            background-color: #ffffff;
+            border: 2px solid var(--color-accent);
+            padding: 40px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* СТИЛЬ ДЛЯ "ГОРІННЯ" В СЕКЦІЇ "ПРО ВЕБСАЙТ" */
+        #about .analysis-block {
+            border: 3px solid var(--color-accent); 
+            box-shadow: 0 0 10px var(--color-accent), 
+                        0 0 20px var(--color-accent), 
+                        0 0 40px rgba(178, 34, 34, 0.7); 
+            animation: pulse-glow 2s infinite alternate; 
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            from {
+                box-shadow: 0 0 8px var(--color-accent), 0 0 15px var(--color-accent);
+            }
+            to {
+                box-shadow: 0 0 15px var(--color-accent), 0 0 30px var(--color-accent), 0 0 50px rgba(178, 34, 34, 0.7);
+            }
+        }
+        
+        /* СТИЛЬ ДЛЯ ПОЯСНЕННЯ КОЛЬОРІВ */
+        .color-explanation {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--color-highlight);
+            text-align: left;
+            font-family: var(--font-serif); 
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .color-explanation strong {
+            color: var(--color-accent);
+        }
+        /* КІНЕЦЬ НОВИХ СТИЛІВ */
+
+
+        .analysis-conclusion {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--color-highlight);
+            font-style: italic;
+            color: var(--color-text);
+            font-size: 1.2em;
+        }
+        
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(62, 74, 89, 0.95); 
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .modal-content {
+            background-color: var(--color-background);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            text-align: center;
+            border: 3px solid var(--color-highlight);
+            transform: scale(0.9);
+            transition: transform 0.5s ease-out;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h3 {
+            font-family: var(--font-serif);
+            color: var(--color-accent);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .modal-text p {
+            font-family: var(--font-serif);
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        #close-modal {
+            background-color: var(--color-accent);
+            color: var(--color-background);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: var(--font-sans);
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        #close-modal:hover {
+            background-color: var(--color-highlight);
+            color: var(--color-text);
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.5);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+            transform: scale(0);
+            z-index: 9999;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo" onclick="showSection('hero', this)">Лаура & Сонет</div>
+            <nav>
+                <a data-section="biography">Біографія</a>
+                <a data-section="works">Твори</a>
+                <a data-section="multimedia">Мультимедіа</a>
+                <a data-section="analysis">Аналіз</a>
+                <a data-section="about">Про вебсайт</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <section id="hero" class="content-section active">
+            <div class="container hero">
+                <div class="hero-image"></div>
+                <h1>Франческо Петрарка</h1>
+                <p>Батько Гуманізму та Майстер Сонета</p>
+            </div>
+            
+            <div class="quote-block">
+                <div class="container">
+                    "Я стомлений і змучений, мій дух не знає спокою,
+                    І все моє життя – одвічна боротьба."
+                </div>
+            </div>
+        </section>
+
+        <section id="biography" class="content-section">
+            <div class="container">
+                <h2 class="section-title">Життя та Доба Франческо Петрарки</h2>
+                <div class="analysis-block">
+                    <p>
+                        Франческо Петрарка (1304–1374) був італійським вченим, поетом та одним із перших ідеологів 
+                        Відродження.
+                    </p>
+                    <div class="analysis-conclusion">
+                        Саме його самоаналіз, відображений у працях "Моя таємниця" (Secretum), зробив його символом 
+                        переходу від середньовічної теоцентричної культури до антропоцентричної культури Відродження.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="works" class="content-section">
+            <div class="container">
+                <h2 class="section-title">Головні Твори та Поетична Спадщина</h2>
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Канцоньєре</h3>
+                        <p>Аналіз структури та найвидатніших віршів з "Книги Пісень".</p>
+                        <a href="https://www.ukrlib.com.ua/world/printit.php?tid=594" target="_blank">Переглянути вірші...</a>
+                    </div>
+                    <div class="card">
+                        <h3>"Про презирство до світу"</h3>
+                        <p>Філософський діалог про моральні та релігійні проблеми.</p>
+                        <a href="#" id="open-modal">Детальніше про філософію...</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="multimedia" class="content-section">
+             <div class="container">
+                <h2 class="section-title">Послухати та Побачити</h2>
+                
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>Аудіо-Сонети</h3>
+                        <p>Прослухайте найвідоміші сонети в перекладі.</p>
+                        <a href="https://youtu.be/OiCjEWb36og?si=FdtlvcAgVjqiNOK5" target="_blank">Слухати найвідоміші сонети (YouTube)</a>
+                    </div>
+                    <div class="card">
+                        <h3>Цікаві факти з життя</h3>
+                        <p>Короткий відеоролик про життя Петрарки.</p>
+                        <a href="https://youtu.be/VmvkVgzOSr8?si=aW8oYHXnPYok8TMQ" target="_blank">Дивитись відео (YouTube)</a>
+                    </div>
+                    <div class="card">
+                        <h3>Галерея Відродження</h3>
+                        <p>Ілюстрація, що зображуює Італію часів Петрарки.</p>
+                        <a href="https://telegra.ph/file/5b41fb26af43da30c1f90.jpg" target="_blank">Переглянути ілюстрацію</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="analysis" class="content-section">
+            <div class="container">
+                <h2 class="section-title">Глибокий Аналіз Творчості</h2>
+
+                <div class="analysis-block">
+                    <p>
+                        Творчість Франческо Петрарки стала важливим мостом між поезією Середньовіччя та доби Відродження. 
+                        Він створив новий образ поета — людини, яка не лише пише про почуття, 
+                        а й глибоко розмірковує про себе, своє життя та світ.
+                    </p>
+                    <div class="analysis-conclusion">
+                        Петрарка не лише подарував нам ідеал "петраркізму", але й допоміг закласти фундамент 
+                        сучасної європейської літератури, зробивши людські переживання найвищою цінністю поезії.
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about" class="content-section">
+            <div class="container" style="text-align: center; padding: 20px;">
+                <h2 class="section-title">Про Вебсайт</h2>
+                <div class="analysis-block">
+                    <p style="max-width: 800px; margin: 0 auto; font-size: 1.1em; text-align: center;">
+                        Під час створення сайту я використовував відкриті джерела, 
+                        тобто матеріали, які доступні всім і не порушують авторські права. 
+                        Це дозволило зібрати точну інформацію та якісні зображення.
+                    </p>
+                    <div class="color-explanation">
+                        <h4 style="font-family: var(--font-serif); color: var(--color-text); margin-bottom: 10px; font-size: 1.4em;">Чому саме ці кольори?</h4>
+                        <p><strong>Темно-Синій/Графіт (#3E4A59):</strong> Основний колір тексту та фону навігації. Символізує елегантність, знання та серйозність класичної спадщини.</p>
+                        <p><strong>Світло-Бежевий (#EFEBE0):</strong> Основний фон сторінки. Імітує колір старого паперу або пергаменту, підкреслюючи історичний контекст.</p>
+                        <p><strong>Цегляно-Червоний (#B22222):</strong> Акцентний колір, особливо для заголовків та наведення курсору. Асоціюється з пристрастю (кохання до Лаури), італійською архітектурою епохи Відродження та оформленням рукописів.</p>
+                        <p><strong>Старе Золото (#D4AF37):</strong> Колір для логотипу та декоративних елементів. Символізує славу, велич та гуманістичний ідеал, а також візуально нагадує про оздоблення старовинних книг.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="secretum-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Secretum (Про презирство до світу)</h3>
+            <div class="modal-text">
+                <p>
+                    "Про презирство до світу" – це один із найглибших і найбільш особистих філософських діалогів Петрарки, 
+                    написаний латиною. У ньому поет веде уявну розмову зі святим Августином, який є його духовним наставником.
+                </p>
+                <p>
+                    Діалог розкриває внутрішній конфлікт Петрарки між його релігійною вірою та його 
+                    світськими пристрастями: коханням до Лаури та прагненням до слави. Це інтелектуальна боротьба, 
+                    яка чудово ілюструє перехідний період між Середньовіччям та Відродженням.
+                </p>
+            </div>
+            <button id="close-modal">Зрозуміло</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 | Лаура та Сонет: Світ Франческо Петрарки. Розробив: Ільницький Гліб Миколайович.</p>
+        </div>
+    </footer>
+    
+    <script>
+        
+
+        const modalOverlay = document.getElementById('secretum-modal');
+        const openModalBtn = document.getElementById('open-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        if (openModalBtn) {
+            openModalBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+        
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', function() {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+        
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+
+        function showSection(sectionId, clickedElement) {
+        
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active-link');
+            });
+
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+          
+            if (clickedElement && clickedElement.tagName === 'A') {
+                clickedElement.classList.add('active-link');
+            }
+       
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('data-section');
+                showSection(sectionId, this);
+            });
+        });
+        
+
+        document.querySelector('.logo').addEventListener('click', function() {
+            showSection('hero', null); 
+        });
+        
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialSection = window.location.hash.substring(1) || 'hero';
+   
+            const initialLink = document.querySelector(`[data-section="${initialSection}"]`);
+            
+            showSection(initialSection, initialLink);
+        });
+
+
+       
+        document.addEventListener('click', function(e) {
+    
+            if (modalOverlay.classList.contains('active')) return; 
+
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+
+            const size = 50;
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${e.clientX - size / 2}px`;
+            ripple.style.top = `${e.clientY - size / 2}px`;
+
+            document.body.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600); 
+        });
+    </script>
+
+</body>
+</html>
